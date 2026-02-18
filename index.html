@@ -52,20 +52,20 @@
 
 function saveProfile() {
 
-  let data = {
-    name: document.getElementById("name").value,
-    blood: document.getElementById("blood").value,
-    allergy: document.getElementById("allergy").value,
-    contact: document.getElementById("contact").value
-  };
+  let name = document.getElementById("name").value;
+  let blood = document.getElementById("blood").value;
+  let allergy = document.getElementById("allergy").value;
+  let contact = document.getElementById("contact").value;
+
+  // 🔥 IMPORTANT: full online URL
+  let baseURL = "https://Savage69-alt.github.io/emergency-lifeline/profile.html";
 
   let url =
-  "profile.html?" +
-  "name=" + encodeURIComponent(data.name) +
-  "&blood=" + encodeURIComponent(data.blood) +
-  "&allergy=" + encodeURIComponent(data.allergy) +
-  "&contact=" + encodeURIComponent(data.contact);
-
+    baseURL +
+    "?name=" + encodeURIComponent(name) +
+    "&blood=" + encodeURIComponent(blood) +
+    "&allergy=" + encodeURIComponent(allergy) +
+    "&contact=" + encodeURIComponent(contact);
 
   document.getElementById("qr").innerHTML = "";
 
