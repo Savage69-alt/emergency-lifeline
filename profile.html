@@ -65,23 +65,47 @@ document.getElementById("info").innerHTML =
   "<b>Contact:</b> " + data.contact;
 
 function callContact() {
-  window.location.href = "tel:" + data.contact;
+
+  if (!data.contact) {
+    alert("No contact number saved");
+    return;
+  }
+
+  window.location.href = "tel:" + data.contact.trim();
 }
+
 
 function sendSOS() {
 
-  navigator.geolocation.getCurrentPosition(function(pos) {
+  if (!navigator.geolocation) {
+    alert("Geolocation not supported");
+    return;
+  }
 
-    let lat = pos.coords.latitude;
-    let lon = pos.coords.longitude;
+  navigator.geolocation.getCurrentPosition(
 
-    document.getElementById("location").innerHTML =
-      "SOS Sent! Location: " + lat + ", " + lon;
+    function(pos) {
 
-  });
+      let lat = pos.coords.latitude;
+      let lon = pos.coords.longitude;
+
+      document.getElementById("location").innerHTML =
+        "🚨 SOS SENT! Location:<br>" +
+        lat + ", " + lon;
+
+    },
+
+    function(error) {
+      alert("Location access denied or unavailable");
+    }
+
+  );
 }
+
 
 </script>
 
 </body>
 </html>
+
+
