@@ -55,7 +55,6 @@
 </iframe>
 
 <script>
-
 let params = new URLSearchParams(window.location.search);
 
 let name = params.get("name");
@@ -63,19 +62,14 @@ let blood = params.get("blood");
 let allergy = params.get("allergy");
 let contact = params.get("contact");
 
+// Show data
 document.getElementById("info").innerHTML =
-  "<b>Name:</b> " + name + "<br>" +
-  "<b>Blood:</b> " + blood + "<br>" +
-  "<b>Allergy:</b> " + allergy + "<br>" +
-  "<b>Contact:</b> " + contact;
+  "<b>Name:</b> " + (name || "Not provided") + "<br>" +
+  "<b>Blood:</b> " + (blood || "Not provided") + "<br>" +
+  "<b>Allergy:</b> " + (allergy || "Not provided") + "<br>" +
+  "<b>Contact:</b> " + (contact || "Not provided");
 
-
-document.getElementById("info").innerHTML =
-  "<b>Name:</b> " + data.name + "<br>" +
-  "<b>Blood:</b> " + data.blood + "<br>" +
-  "<b>Allergy:</b> " + data.allergy + "<br>" +
-  "<b>Contact:</b> " + data.contact;
-
+// Call function
 function callContact() {
 
   if (!contact) {
@@ -85,7 +79,6 @@ function callContact() {
 
   let phone = contact.trim();
 
-  // Add +91 if user entered 10-digit Indian number
   if (phone.length === 10 && !phone.startsWith("+")) {
     phone = "+91" + phone;
   }
@@ -93,34 +86,20 @@ function callContact() {
   window.location.href = "tel:" + phone;
 }
 
-
-
+// SOS
 function sendSOS() {
 
-  if (!navigator.geolocation) {
-    alert("Geolocation not supported");
-    return;
-  }
+  navigator.geolocation.getCurrentPosition(function(pos) {
 
-  navigator.geolocation.getCurrentPosition(
+    let lat = pos.coords.latitude;
+    let lon = pos.coords.longitude;
 
-    function(pos) {
+    document.getElementById("location").innerHTML =
+      "🚨 SOS Sent! Location: " + lat + ", " + lon;
 
-      let lat = pos.coords.latitude;
-      let lon = pos.coords.longitude;
-
-      document.getElementById("location").innerHTML =
-        "🚨 SOS SENT! Location:<br>" +
-        lat + ", " + lon;
-
-    },
-
-    function(error) {
-      alert("Location access denied or unavailable");
-    }
-
-  );
+  });
 }
+
 
 
 </script>
