@@ -59,9 +59,13 @@ function saveProfile() {
     contact: document.getElementById("contact").value
   };
 
-  localStorage.setItem("profile", JSON.stringify(data));
+  let url =
+  "profile.html?" +
+  "name=" + encodeURIComponent(data.name) +
+  "&blood=" + encodeURIComponent(data.blood) +
+  "&allergy=" + encodeURIComponent(data.allergy) +
+  "&contact=" + encodeURIComponent(data.contact);
 
-  let url = window.location.href.replace("index.html","") + "profile.html";
 
   document.getElementById("qr").innerHTML = "";
 
