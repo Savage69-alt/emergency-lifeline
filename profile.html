@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Emergency Profile</title>
+
+  <style>
+    body {
+      font-family: Arial;
+      background: #fff;
+      padding: 20px;
+    }
+
+    .card {
+      border: 2px solid red;
+      padding: 20px;
+      border-radius: 10px;
+    }
+
+    button {
+      padding: 12px;
+      font-size: 16px;
+      margin-top: 10px;
+      width: 100%;
+    }
+
+    .call {
+      background: green;
+      color: white;
+    }
+
+    .sos {
+      background: red;
+      color: white;
+    }
+  </style>
+</head>
+
+<body>
+
+<h1>🚨 Emergency Info</h1>
+
+<div class="card" id="info"></div>
+
+<button class="call" onclick="callContact()">📞 Call Contact</button>
+
+<button class="sos" onclick="sendSOS()">🆘 SEND SOS</button>
+
+<p id="location"></p>
+
+<h2>🏥 Nearby Hospitals</h2>
+<iframe
+  width="100%"
+  height="300"
+  src="https://www.google.com/maps?q=hospital&output=embed">
+</iframe>
+
+<script>
+
+let data = JSON.parse(localStorage.getItem("profile"));
+
+document.getElementById("info").innerHTML =
+  "<b>Name:</b> " + data.name + "<br>" +
+  "<b>Blood:</b> " + data.blood + "<br>" +
+  "<b>Allergy:</b> " + data.allergy + "<br>" +
+  "<b>Contact:</b> " + data.contact;
+
+function callContact() {
+  window.location.href = "tel:" + data.contact;
+}
+
+function sendSOS() {
+
+  navigator.geolocation.getCurrentPosition(function(pos) {
+
+    let lat = pos.coords.latitude;
+    let lon = pos.coords.longitude;
+
+    document.getElementById("location").innerHTML =
+      "SOS Sent! Location: " + lat + ", " + lon;
+
+  });
+}
+
+</script>
+
+</body>
+</html>
